@@ -27,7 +27,7 @@ sub callback {
 
 **注：服务器donet版本，所以同时执行了v2和v4的SchTask，替换CS_InitSchTask目录下的logon.exe为自己的马，cobalt strike中Load InitSchTask.cna插件，或`./agscript [host] [port] [user] [password] [/path/to/script.cna]`使用。**
 
-PS：文件同一个目录，例如：
+PS：文件需在同一个目录，例如：
 
 ![image-20211207210416939](README/image-20211207210416939.png)
 
